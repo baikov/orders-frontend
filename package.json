@@ -1,0 +1,37 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxi typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@iconify/json": "^2.2.108",
+    "@nuxt/devtools": "latest",
+    "@nuxt/image": "^1.0.0-rc.1",
+    "@nuxthq/ui": "^2.7.0",
+    "@nuxtjs/eslint-config-typescript": "^12.1.0",
+    "@nuxtjs/eslint-module": "^4.1.0",
+    "@nuxtjs/google-fonts": "^3.0.2",
+    "@pinia/nuxt": "^0.4.11",
+    "@types/node": "^20.5.7",
+    "@vueuse/core": "^10.3.0",
+    "@vueuse/nuxt": "^10.3.0",
+    "eslint": "^8.48.0",
+    "eslint-plugin-tailwindcss": "^3.13.0",
+    "nuxt": "^3.7.0",
+    "nuxt-og-image": "^2.0.21",
+    "nuxt-schema-org": "^2.2.0",
+    "nuxt-simple-robots": "^3.1.1",
+    "nuxt-simple-sitemap": "^3.2.6",
+    "pinia": "^2.1.6",
+    "typescript": "^5.2.2",
+    "vue-tsc": "^1.8.8"
+  }
+}

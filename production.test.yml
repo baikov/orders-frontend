@@ -1,0 +1,35 @@
+version: '3.9'
+name: ${COMPOSE_PROJECT_NAME}
+
+services:
+  nuxt:
+    build:
+      context: .
+      dockerfile: ./compose/production/Dockerfile
+    image: ${COMPOSE_PROJECT_NAME}_nuxt
+    container_name: ${COMPOSE_PROJECT_NAME}_nuxt
+    env_file: .env
+    environment:
+      - PROTOCOL=https
+      - NODE_ENV=production
+    restart: unless-stopped
+    command: sh -c "node .output/server/index.mjs"
+    expose:
+      - 3000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=dev-proxy"
+      - "traefik.http.routers.nuxt.rule=(Host(`${DOMAIN}`) || Host(`www.${DOMAIN}`))"
+      - "traefik.http.routers.nuxt.entrypoints=websecure"
+      - "traefik.http.routers.nuxt.priority=5"
+      - "traefik.http.routers.nuxt.tls=true"
+      # - "traefik.http.routers.nuxt.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.nuxt.middlewares=security-headers@file,compression@file"
+      - "traefik.http.routers.nuxt.tls.options=default"
+      - "traefik.http.services.nuxt.loadbalancer.server.port=3000"
+    networks:
+      - dev-proxy
+
+networks:
+  dev-proxy:
+    external: true

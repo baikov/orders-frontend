@@ -1,0 +1,45 @@
+# Config for Dependabot updates. See Documentation here:
+# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  # Update GitHub actions in workflows
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    # Every weekday
+    schedule:
+      interval: 'daily'
+
+  # Enable version updates for Docker
+  # We need to specify each Dockerfile in a separate entry because Dependabot doesn't
+  # support wildcards or recursively checking subdirectories. Check this issue for updates:
+  # https://github.com/dependabot/dependabot-core/issues/2178
+
+  - package-ecosystem: 'docker'
+    # Look for a `Dockerfile` in the `compose/local/node` directory
+    directory: 'compose/local/'
+    # Every weekday
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'docker'
+    # Look for a `Dockerfile` in the `compose/local/node` directory
+    directory: 'compose/production/'
+    # Every weekday
+    schedule:
+      interval: 'daily'
+
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    # Look for `package.json` and `lock` files in the `root` directory
+    directory: "/"
+    # Check the npm registry for updates every day (weekdays)
+    schedule:
+      interval: "daily"
+    # If don't need to update from 18 to 20
+    # ignore:
+    #   - dependency-name: '@types/node'
+    #     update-types:
+    #       - 'version-update:semver-major'
+    #       - 'version-update:semver-minor'
+    #       - 'version-update:semver-patch'

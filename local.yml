@@ -1,0 +1,28 @@
+version: '3.9'
+name: ${COMPOSE_PROJECT_NAME}
+
+volumes:
+  node_modules: {}
+  dev_nuxt: {}
+
+services:
+  nuxt:
+    build:
+      context: .
+      dockerfile: ./compose/local/Dockerfile
+    image: ${COMPOSE_PROJECT_NAME}_local_nuxt
+    container_name: ${COMPOSE_PROJECT_NAME}_local_nuxt
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - HMR_PROTOCOL=ws
+      - PROTOCOL=http
+      - NODE_ENV=development
+    ports:
+      - '${NUXT_DOCKER_PORT:-3000}:3000'
+      - '${HMR_DOCKER_PORT:-24678}:24678'
+    command: sh -c "yarn postinstall && yarn dev"  # yarn dev
+    volumes:
+      - .:/nuxt
+      - dev_nuxt:/nuxt/.nuxt
+      - node_modules:/nuxt/node_modules

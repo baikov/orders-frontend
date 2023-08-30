@@ -1,0 +1,38 @@
+{
+  /* Tailwindcss Setting */
+  "tailwindCSS.includeLanguages": {
+    "plaintext": "html"
+  },
+  "editor.hover.enabled": true,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+      "strings": true
+  },
+  "tailwindCSS.experimental.configFile": "tailwind.config.ts",
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "ui"
+  ],
+  // ESLint
+  "prettier.enable": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll": false
+  },
+  // Nuxt
+  "nuxtr.defaultPackageManager": "Yarn",
+  "nuxtr.vueFiles.firstTag": "script",
+  "nuxtr.vueFiles.script.type": "setup",
+  "nuxtr.vueFiles.script.defaultLanguage": "ts",
+  "nuxtr.vueFiles.style.addStyleTag": false,
+  "nuxtr.vueFiles.style.alwaysScoped": true,
+  "nuxtr.vueFiles.style.defaultLanguage": "css",
+  // Github Pull Requests
+  "githubPullRequests.assignCreated": "${user}",
+  "githubPullRequests.postCreate": "checkoutDefaultBranch",
+  "githubIssues.issueBranchTitle": "${user}/issue#${issueNumber}"
+}

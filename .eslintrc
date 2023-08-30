@@ -1,0 +1,11 @@
+{
+    "extends": ["@nuxtjs/eslint-config-typescript", "plugin:tailwindcss/recommended"],
+    "rules": {
+      "vue/no-restricted-syntax":["error", {
+        "selector": "VElement[name='a']",
+        "message": "Use NuxtLink instead."
+      }],
+      "vue/multi-word-component-names": "off",
+      "tailwindcss/no-custom-classname": "off"
+    }
+  }

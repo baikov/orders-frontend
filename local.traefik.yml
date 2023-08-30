@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  nuxt:
+    ports: !reset []
+    expose:
+      - 3000
+      - 24678
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=dev-proxy"
+      # Nuxt
+      - "traefik.http.routers.nuxt.rule=(Host(`${DOMAIN}`) || Host(`www.${DOMAIN}`))"
+      - "traefik.http.routers.nuxt.service=nuxt@docker"
+      - "traefik.http.routers.nuxt.entrypoints=web"
+      - "traefik.http.routers.nuxt.tls=false"
+      - "traefik.http.routers.nuxt.priority=5"
+      - "traefik.http.routers.nuxt.middlewares=compression@file"
+      - "traefik.http.services.nuxt.loadbalancer.server.port=3000"
+      # HMR
+      - "traefik.http.routers.hmr.rule=(Host(`${DOMAIN}`) || Host(`www.${DOMAIN}`))"
+      - "traefik.http.routers.hmr.service=hmr@docker"
+      - "traefik.http.routers.hmr.entrypoints=hmr"
+      - "traefik.http.routers.hmr.tls=false"
+      - "traefik.http.services.hmr.loadbalancer.server.port=24678"
+    networks:
+      - dev-proxy
+
+networks:
+  dev-proxy:
+    external: true
