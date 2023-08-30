@@ -5,6 +5,7 @@
     "antfu.iconify",
     "antfu.goto-alias",
     "nuxtr.nuxtr-vscode",
-    "irongeek.vscode-env"
+    "irongeek.vscode-env",
+    "vue.volar"
   ]
 }
