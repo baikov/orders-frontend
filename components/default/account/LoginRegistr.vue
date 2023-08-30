@@ -2,7 +2,7 @@
 import type { FormError } from '@nuxthq/ui/dist/runtime/types'
 import { storeToRefs } from 'pinia'
 import { promiseTimeout } from '@vueuse/core'
-import type { ILoginForm, IRegistrationForm, IUser, IAuthError } from 'types'
+import type { ILoginForm, IRegistrationForm, IUser, IAuthError } from '~/types'
 import { useAuthStore } from '~/store/auth'
 
 const userCookie = useCookie<IUser>('user')

@@ -1,5 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import type { IUser, IJWTCreate, ILoginForm, IRegistrationForm, IActivateAccount, IAuthError } from 'types'
+import type { IUser, IJWTCreate, ILoginForm, IRegistrationForm, IActivateAccount, IAuthError } from '~/types'
 
 const createErrors = (data: any): IAuthError | null => {
   if (!data) {

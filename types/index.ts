@@ -107,7 +107,7 @@ interface IAuthError {
   message: string[] | null
 }
 
-export {
+export type {
   IMenuItem,
   ICategory,
   IProduct,

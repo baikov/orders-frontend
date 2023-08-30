@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IBreadcrumb } from 'types'
+import type { IBreadcrumb } from '~/types'
 const breadcrumbs = defineProps<{
   items?: IBreadcrumb[]
 }>()

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
 import { promiseTimeout } from '@vueuse/core'
-import type { IActivateAccount, IAuthError } from 'types'
+import type { IActivateAccount, IAuthError } from '~/types'
 import { useAuthStore } from '~/store/auth'
 
 const { errorMessage, user } = storeToRefs(useAuthStore())
