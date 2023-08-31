@@ -8,10 +8,10 @@ defineOgImage({
 
 <template>
   <div class="flex min-h-screen w-full flex-col">
-    <DefaultHeader />
+    <CommonHeader />
     <div class="flex w-full flex-1 flex-col">
       <slot />
     </div>
-    <DefaultFooter />
+    <CommonFooter />
   </div>
 </template>

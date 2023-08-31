@@ -50,7 +50,7 @@ export default defineNuxtConfig({
   },
   ui: {
     global: true,
-    icons: ['mdi', 'heroicons', 'tabler']
+    icons: ['mdi', 'heroicons', 'tabler', 'icon-park-solid']
   },
   image: {
     // dir: 'assets/img',

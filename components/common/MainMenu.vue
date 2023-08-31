@@ -2,13 +2,13 @@
 const mainMenu = [
   {
     id: 1,
-    name: 'Home',
-    slug: ''
+    name: 'Клиенты',
+    slug: 'customers'
   },
   {
     id: 2,
-    name: 'VueUse',
-    slug: 'vueuse'
+    name: 'Заказы',
+    slug: 'orders'
   }
 ]
 </script>
