@@ -11,7 +11,7 @@
 
 <template>
   <header
-    class="border-primary-600 from-primary-900 to-primary-700 sticky top-0 z-40 flex h-16 border-b bg-gradient-to-r text-gray-200"
+    class="border-primary-600 from-primary-700 to-primary-500 sticky top-0 z-40 flex h-16 border-b bg-gradient-to-r text-gray-200"
   >
     <UContainer class="flex flex-1 items-center">
       <DefaultLogo />

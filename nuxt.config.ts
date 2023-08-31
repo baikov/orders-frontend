@@ -27,7 +27,7 @@ export default defineNuxtConfig({
     shim: false
   },
   modules: [
-    '@nuxtjs/eslint-module',
+    '@nuxtjs/eslint-module', // https://github.com/nuxt-modules/eslint
     '@nuxthq/ui',
     '@nuxt/image',
     '@vueuse/nuxt',
@@ -72,5 +72,11 @@ export default defineNuxtConfig({
     // provide simple disallow rules for all robots `user-agent: *`
     disallow: ['/account', '/admin'],
     allow: '/admin/login'
+  },
+  eslint: {
+    lintOnStart: false
+  },
+  tailwindcss: {
+    viewer: false
   }
 })

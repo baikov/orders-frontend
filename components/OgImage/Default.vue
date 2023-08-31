@@ -17,7 +17,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="flex h-full w-full items-center justify-center border-b border-blue-600 bg-gradient-to-r from-blue-900 to-blue-700 text-zinc-200">
+  <div class="flex h-full w-full items-center justify-center border-b border-red-800 bg-red-600 text-zinc-200">
     <h1>
       {{ title }}
     </h1>
