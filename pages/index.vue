@@ -28,5 +28,5 @@ useHead({
 </script>
 
 <template>
-  <DefaultHero />
+  <CustomerList />
 </template>
