@@ -19,10 +19,19 @@ const customerId = useState<number | null>('customerId', () => null)
               </p>
             </div>
             <div class="shrink-0 pr-2">
-              <NuxtLink to="/orders" prefetch class="relative inline-flex items-center space-x-2 rounded-l-md border border-gray-300 bg-gray-50 p-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" @click="customerId = customer.id">
+              <NuxtLink
+                to="/orders"
+                prefetch
+                class="relative inline-flex items-center space-x-2 rounded-l-md border border-gray-300 bg-gray-50 p-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                @click="customerId = customer.id"
+              >
                 <UIcon name="i-mdi-list-box" class="h-5 w-5 text-gray-600 hover:text-gray-800" aria-hidden="true" />
               </NuxtLink>
-              <NuxtLink to="/orders/create" class="relative -ml-px inline-flex items-center space-x-2 rounded-r-md border border-gray-300 bg-gray-50 p-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500" @click="customerId = customer.id">
+              <NuxtLink
+                to="/orders/create"
+                class="relative -ml-px inline-flex items-center space-x-2 rounded-r-md border border-gray-300 bg-gray-50 p-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                @click="customerId = customer.id"
+              >
                 <UIcon name="i-mdi-plus-box" class="h-5 w-5 text-green-600 hover:text-green-700" aria-hidden="true" />
               </NuxtLink>
             </div>

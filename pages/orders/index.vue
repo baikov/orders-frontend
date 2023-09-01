@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const customerId = useState<number>('customerId')
+const customerId = useState<number | null>('customer_id', () => null)
 </script>
 
 <template>

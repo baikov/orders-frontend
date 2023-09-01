@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 const { getCustomerOrders } = useCustomer()
-
+const props = defineProps<{
+  customerId: number | null
+}>()
 const orders = await getCustomerOrders()
 if (orders === null || orders.data.value === null) {
   // look at https://github.com/mitre/saf-site-frontend/issues/89
@@ -10,6 +12,7 @@ if (orders === null || orders.data.value === null) {
     statusMessage: 'Page Not Found'
   })
 }
+console.log('customerId', props.customerId)
 </script>
 
 <template>

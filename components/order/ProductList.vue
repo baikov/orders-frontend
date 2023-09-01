@@ -45,6 +45,7 @@ if (order === null) {
                 <tbody>
                   <template v-for="(product, productIdx) in order.products" :key="product.id">
                     <OrderProductListRow :id="product.id" :product="product" :idx="productIdx" />
+                    <!-- {{ product.name }} -->
                   </template>
                 </tbody>
               </table>

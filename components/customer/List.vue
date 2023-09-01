@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const { getCustomersList } = useCustomer()
 const customersList = await getCustomersList()
-const customerId = useState<number | null>('customerId', () => null)
+const customerId = useState<number | null>('customer_id', () => null)
 </script>
 
 <template>
@@ -34,7 +34,11 @@ const customerId = useState<number | null>('customerId', () => null)
               </div>
               <div class="-ml-px flex w-0 flex-1">
                 <!-- <NuxtLink :to="`/customer-orders/${customer.id}`" class="relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500"> -->
-                <NuxtLink to="/orders/create" class="relative inline-flex w-0 flex-1 cursor-pointer items-center justify-center rounded-br-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500" @click="customerId = customer.id">
+                <NuxtLink
+                  to="/orders/create"
+                  class="relative inline-flex w-0 flex-1 cursor-pointer items-center justify-center rounded-br-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
+                  @click="customerId = customer.id"
+                >
                   <UIcon name="i-mdi-plus-box" class="h-5 w-5 text-gray-400" aria-hidden="true" />
                   <span class="ml-3">Создать заказ</span>
                 </NuxtLink>

@@ -10,6 +10,8 @@ useSeoMeta({
 const { getCustomerDetail, createCustomerOrder } = useCustomer()
 let customer: ICustomer | null = null
 if (props.customerId) { customer = await getCustomerDetail(props.customerId) }
+console.log('customerId', props.customerId)
+console.log('customer', customer?.name)
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const file = ref<File | null>(null)
@@ -24,7 +26,9 @@ const uploadFile = async () => {
     const formData = new FormData()
     formData.append('file', file.value)
     formData.append('customer', customer.id.toString())
+    console.log('formData', formData)
     customerOrder.value = await createCustomerOrder(formData)
+    console.log('customerOrder', customerOrder.value)
     await navigateTo(`/orders/${customerOrder.value?.id}`)
   }
 }

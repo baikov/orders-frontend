@@ -13,7 +13,7 @@ async function onLogout () {
     icon: 'i-heroicons-check-solid',
     color: 'green',
     callback: () => {
-      return navigateTo('account')
+      return navigateTo('/account')
     }
   })
 }

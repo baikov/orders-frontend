@@ -1,27 +1,15 @@
 <script lang="ts" setup>
 import { useClipboard } from '@vueuse/core'
+import type { IOrder } from '~/types/orders'
 
 const props = defineProps<{
-  orderId: number
+  tpOrders: IOrder[]
 }>()
-const { getOrdersList, createTPOrders } = useOrders()
-const tpOrders = await getOrdersList(props.orderId)
-// Перенес на кнопку
-// const createOrders = (id: number) => {
-//   const result = createTPOrders(id)
-// }
-if (tpOrders === null) {
-  // look at https://github.com/mitre/saf-site-frontend/issues/89
-  showError({ statusCode: 404, statusMessage: 'Page Not Found' })
-  throw createError({
-    statusCode: 400,
-    statusMessage: 'Page Not Found'
-  })
-}
+
 // Пагинация заказов по точкам
 const tpIndex = useState('tp_index', () => 0)
 const next = () => {
-  if (tpIndex.value < tpOrders.length - 1) { tpIndex.value++ }
+  if (tpIndex.value < props.tpOrders.length - 1) { tpIndex.value++ }
 }
 const prev = () => {
   if (tpIndex.value > 0) { tpIndex.value-- }
@@ -30,25 +18,25 @@ const prev = () => {
 // Функционал копирования таблиц и сапкодов точек по кнопке
 const getTable = (index: number) => {
   let text = ''
-  for (let i = 0; i < tpOrders[index].products_list.length; i++) {
-    text += `${tpOrders[index].products_list[i].vendor_code}\t${tpOrders[index].products_list[i].amount / tpOrders[index].products_list[i].amount_in_pack}`
-    if (i < tpOrders[index].products_list.length - 1) { text += '\n' }
+  for (let i = 0; i < props.tpOrders[index].products_list.length; i++) {
+    text += `${props.tpOrders[index].products_list[i].vendor_code}\t${props.tpOrders[index].products_list[i].amount / props.tpOrders[index].products_list[i].amount_in_pack}`
+    if (i < props.tpOrders[index].products_list.length - 1) { text += '\n' }
   }
   return text
 }
 const getSapcode = (index: number) => {
-  return `${tpOrders[index].trade_point_name}`
+  return `${props.tpOrders[index].trade_point_name}`
 }
 const tableContent = useState('table_content', () => getTable(tpIndex.value))
 const sapcode = useState('sapcode', () => getSapcode(tpIndex.value))
-const ordersCopied = useState('orders_copied', () => Array(tpOrders.length).fill(0))
+const ordersCopied = useState('orders_copied', () => Array(props.tpOrders.length).fill(0))
 const { copy: copyTable, isSupported } = useClipboard({ source: tableContent })
 const { copy: copySapcode, copied: copiedSapcode } = useClipboard({ source: sapcode })
 </script>
 
 <template>
-  <CommonPageTitle :text="`Товары по точкам в заказе № ${orderId}`" />
-  <section v-if="tpOrders.length !== 0" class="relative mx-auto flex w-full flex-col">
+  <CommonPageTitle :text="`Товары по точкам в заказе № ${tpOrders[0].customer_order}`" />
+  <section class="relative mx-auto flex w-full flex-col">
     <div class="mx-auto w-full max-w-7xl p-4">
       <div class="flex flex-row flex-wrap gap-2">
         <button
@@ -87,7 +75,7 @@ const { copy: copySapcode, copied: copiedSapcode } = useClipboard({ source: sapc
             <span
               v-if="isSupported"
               class="rounded-xs inline-flex cursor-copy items-center border border-dotted py-0.5 pl-2.5 pr-1 text-sm font-medium"
-              :class="copiedSapcode ? 'bg-green-50 hover:bg-green-100 text-green-700 border-green-300' : 'bg-primary-50 hover:bg-primary-100 text-primary-700 border-primary-300'"
+              :class="copiedSapcode ? 'bg-green-50 hover:bg-green-100 text-green-700 border-green-300' : 'bg-red-50 hover:bg-red-100 text-red-700 border-red-300'"
               @click="copySapcode()"
             >
               sap-код: {{ tpOrders[tpIndex].trade_point_sapcode }}
@@ -104,14 +92,17 @@ const { copy: copySapcode, copied: copiedSapcode } = useClipboard({ source: sapc
                 aria-hidden="true"
               />
             </span>
-            <span v-else class="rounded-xs inline-flex items-center border border-dotted py-0.5 pl-2.5 pr-1 text-sm font-medium text-gray-500">sap-код: {{ tpOrders[tpIndex].trade_point_sapcode }}</span>
+            <span
+              v-else
+              class="rounded-xs inline-flex items-center border border-dotted py-0.5 pl-2.5 pr-1 text-sm font-medium text-gray-500"
+            >sap-код: {{ tpOrders[tpIndex].trade_point_sapcode }}</span>
           </div>
         </div>
         <div class="w-4/12 items-start overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <div
               class="overflow-hidden border-b shadow shadow-green-600 sm:rounded-lg"
-              :class="ordersCopied[tpIndex] ? 'border-green-200 shadow-green-600' : 'border-primary-200 shadow-primary-600'"
+              :class="ordersCopied[tpIndex] ? 'border-green-200 shadow-green-600' : 'border-red-200 shadow-red-600'"
             >
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
@@ -124,7 +115,7 @@ const { copy: copySapcode, copied: copiedSapcode } = useClipboard({ source: sapc
                       <div v-show="isSupported" class="absolute inset-y-0 right-0 flex items-center">
                         <NuxtLink
                           class="inline-flex items-center space-x-2 rounded-md border p-2 text-sm font-medium focus:outline-none"
-                          :class="ordersCopied[tpIndex] ? 'bg-green-50 hover:bg-green-100 text-green-700 border-green-300' : 'bg-primary-50 hover:bg-primary-100 text-primary-700 border-primary-300'"
+                          :class="ordersCopied[tpIndex] ? 'bg-green-50 hover:bg-green-100 text-green-700 border-green-300' : 'bg-red-50 hover:bg-red-100 text-red-700 border-red-300'"
                           @click="copyTable(); ordersCopied[tpIndex] = 1"
                         >
                           <UIcon
@@ -177,7 +168,11 @@ const { copy: copySapcode, copied: copiedSapcode } = useClipboard({ source: sapc
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(product, productIdx) in tpOrders[tpIndex].products_list" :key="product.id" :class="productIdx % 2 === 0 ? 'bg-white' : 'bg-gray-100'">
+                  <tr
+                    v-for="(product, productIdx) in tpOrders[tpIndex].products_list"
+                    :key="product.id"
+                    :class="productIdx % 2 === 0 ? 'bg-white' : 'bg-gray-100'"
+                  >
                     <td class="whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600">
                       {{ product.product_name }}
                     </td>
@@ -195,16 +190,6 @@ const { copy: copySapcode, copied: copiedSapcode } = useClipboard({ source: sapc
       <div v-else>
         Отсутствуют товары в заказе
       </div>
-    </div>
-  </section>
-  <section v-else class="relative mx-auto flex w-full flex-col">
-    <div class="mx-auto w-full max-w-7xl p-4">
-      <NuxtLink
-        class="relative inline-flex items-center space-x-2 rounded-l-md border border-gray-300 bg-gray-50 p-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-        @click="createTPOrders(orderId)"
-      >
-        <UIcon name="i-mdi-flask" class="text-primary-600 hover:text-primary-800 h-5 w-5" aria-hidden="true" />
-      </NuxtLink>
     </div>
   </section>
 </template>
