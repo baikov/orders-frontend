@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const { getCustomerOrders } = useCustomer()
-const props = defineProps<{
+defineProps<{
   customerId: number | null
 }>()
 const orders = await getCustomerOrders()
@@ -12,7 +12,6 @@ if (orders === null || orders.data.value === null) {
     statusMessage: 'Page Not Found'
   })
 }
-console.log('customerId', props.customerId)
 </script>
 
 <template>
