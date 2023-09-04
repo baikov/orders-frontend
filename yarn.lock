@@ -6737,10 +6737,10 @@ nuxi@^3.7.0:
   optionalDependencies:
     fsevents "~2.3.3"
 
-nuxt-og-image@^2.0.23:
-  version "2.0.23"
-  resolved "https://registry.yarnpkg.com/nuxt-og-image/-/nuxt-og-image-2.0.23.tgz#a2afd356e27b9ff30e591d7069850d337eb44ab7"
-  integrity sha512-Pe3tJYOz+8DddyBDL+4t3/vtfmiaEKq+iTRbpocVtvnphITrySIRJQ9qp9yMQM8jgt9VV0vr27xlg2p47iigdA==
+nuxt-og-image@^2.0.24:
+  version "2.0.24"
+  resolved "https://registry.yarnpkg.com/nuxt-og-image/-/nuxt-og-image-2.0.24.tgz#a02911fb9576309fc4e81a63d4ebb20f4b937578"
+  integrity sha512-ac0IUd5v7AYAn5Jis+upxu5ROHmzz1lmtfRQWyMARvTFI55PVTtRT5q+WccwGYlnrMi3n25K37IwsbdzxM/JSg==
   dependencies:
     "@nuxt/kit" "^3.7.0"
     "@resvg/resvg-js" "^2.4.1"
@@ -6766,7 +6766,7 @@ nuxt-og-image@^2.0.23:
     pathe "^1.1.1"
     playwright-core "^1.37.1"
     radix3 "^1.1.0"
-    satori "0.10.3"
+    satori "0.10.4"
     satori-html "^0.3.2"
     sirv "^2.0.3"
     std-env "^3.4.3"
@@ -8208,10 +8208,10 @@ satori-html@^0.3.2:
   dependencies:
     ultrahtml "^1.2.0"
 
-satori@0.10.3:
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/satori/-/satori-0.10.3.tgz#acb52506efca88b911295935e2eaae792e5722ca"
-  integrity sha512-8tZPu7AGiRWimbOyja1s2HK0hEC4DacZ8cAKDITxlVI5tKQZbOuMiVgSB50CABwc0I4Imgtkq7o9Egj1WOJTKg==
+satori@0.10.4:
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/satori/-/satori-0.10.4.tgz#ba2b050b5cd00757e02dede45710d8b0a58aac04"
+  integrity sha512-GJNIsuiXhiC9kWGLvz04Op5DZy2UFYZAWsuUtkTlQt3r15o0K96PeD+FMfGN4luMPUHc4uV9gXqAoPxOK0omSw==
   dependencies:
     "@shuding/opentype.js" "1.4.0-beta.0"
     css-background-parser "^0.1.0"
