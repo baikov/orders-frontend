@@ -1,5 +1,6 @@
+ARG NODE_VERSION=20
 # Build
-FROM node:18-alpine as builder
+FROM node:${NODE_VERSION}-alpine as builder
 
 WORKDIR /nuxt
 
@@ -15,7 +16,7 @@ COPY . .
 RUN yarn build
 
 # Run
-FROM node:18-alpine as prod
+FROM node:${NODE_VERSION}-alpine as prod
 
 ENV NODE_ENV production
 WORKDIR /nuxt

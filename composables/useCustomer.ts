@@ -37,15 +37,17 @@ export const useCustomer = () => {
   }
 
   const getCustomerOrderDetail = async (id: number) => {
-    try {
-      const data = await $fetch<ICustomerOrder>(
-        `${config.public.apiUrl}/customer-orders/${id}/`
-      )
-      return data as ICustomerOrder
-    } catch (e: any) {
-      showError(e)
+    const { data, error } = await useFetch<ICustomerOrder>(
+      `${config.public.apiUrl}/customer-orders/${id}/`
+    )
+    if (data.value) {
+      return data.value
+    }
+    if (error.value) {
+      // showError(error.value)
       return null
     }
+    return null
   }
   const getCustomerDetail = async (id: number) => {
     try {
@@ -79,7 +81,7 @@ export const useCustomer = () => {
         `${config.public.apiUrl}/trade-points/`,
         {
           query: {
-            customer_id: customerId
+            customer: customerId
           }
         }
       )
