@@ -2,6 +2,7 @@ interface ICustomer {
   id: number
   name: string
   tp_count: number
+  order_in_packs: boolean
   // eslint-disable-next-line no-use-before-define
   last_order?: ICustomerOrder
 }
@@ -13,12 +14,25 @@ interface IProduct {
   amount_in_pack: number | null
 }
 
+interface ICustomerProduct {
+  id: number
+  name: string
+  vendor_code: string | null
+  product: IProduct | null
+  option: string
+
+}
+interface ICustomerProductUpdate {
+  id: number
+  product_id: number | null
+}
+
 interface ICustomerOrder {
   id: number
   customer: ICustomer
   customer_name: string
   file: string
-  products: IProduct[] | []
+  products: ICustomerProduct[] | []
   created: string
   modified: string
 }
@@ -33,6 +47,8 @@ interface IProductInOrder {
   id: number
   product_name: string
   vendor_code: string
+  base_vendor_code: string
+  base_product_name: string
   amount: number
   amount_in_pack: number
 }
@@ -51,5 +67,7 @@ export type {
   IProduct,
   ICustomerOrder,
   ITradePoint,
-  IOrder
+  IOrder,
+  ICustomerProduct,
+  ICustomerProductUpdate
 }

@@ -9,6 +9,11 @@ const mainMenu = [
     id: 2,
     name: 'Заказы',
     slug: 'orders'
+  },
+  {
+    id: 3,
+    name: 'Товары',
+    slug: 'products'
   }
 ]
 </script>

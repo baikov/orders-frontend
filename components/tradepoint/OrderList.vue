@@ -1,15 +1,24 @@
 <script lang="ts" setup>
 import { useClipboard } from '@vueuse/core'
-import type { IOrder } from '~/types/orders'
 
-const props = defineProps<{
-  tpOrders: IOrder[]
-}>()
+// const props = defineProps<{
+//   tpOrders: IOrder[]
+// }>()
+const { getOrdersList } = useOrders()
+const route = useRoute()
+const id = +route.params.id
+const tpOrders = await getOrdersList(id)
+
+if (tpOrders === null) {
+  // look at https://github.com/mitre/saf-site-frontend/issues/89
+  showError({ statusCode: 404, statusMessage: 'Message 0' })
+  throw createError({ statusCode: 400, statusMessage: 'Message 1' })
+}
 
 // Пагинация заказов по точкам
 const tpIndex = useState('tp_index', () => 0)
 const next = () => {
-  if (tpIndex.value < props.tpOrders.length - 1) { tpIndex.value++ }
+  if (tpIndex.value < tpOrders.length - 1) { tpIndex.value++ }
 }
 const prev = () => {
   if (tpIndex.value > 0) { tpIndex.value-- }
@@ -18,18 +27,18 @@ const prev = () => {
 // Функционал копирования таблиц и сапкодов точек по кнопке
 const getTable = (index: number) => {
   let text = ''
-  for (let i = 0; i < props.tpOrders[index].products_list.length; i++) {
-    text += `${props.tpOrders[index].products_list[i].vendor_code}\t${props.tpOrders[index].products_list[i].amount / props.tpOrders[index].products_list[i].amount_in_pack}`
-    if (i < props.tpOrders[index].products_list.length - 1) { text += '\n' }
+  for (let i = 0; i < tpOrders[index].products_list.length; i++) {
+    text += `${tpOrders[index].products_list[i].vendor_code}\t${tpOrders[index].products_list[i].amount / tpOrders[index].products_list[i].amount_in_pack}`
+    if (i < tpOrders[index].products_list.length - 1) { text += '\n' }
   }
   return text
 }
 const getSapcode = (index: number) => {
-  return `${props.tpOrders[index].trade_point_name}`
+  return `${tpOrders[index].trade_point_name}`
 }
 const tableContent = useState('table_content', () => getTable(tpIndex.value))
 const sapcode = useState('sapcode', () => getSapcode(tpIndex.value))
-const ordersCopied = useState('orders_copied', () => Array(props.tpOrders.length).fill(0))
+const ordersCopied = useState('orders_copied', () => Array(tpOrders.length).fill(0))
 const { copy: copyTable, isSupported } = useClipboard({ source: tableContent })
 const { copy: copySapcode, copied: copiedSapcode } = useClipboard({ source: sapcode })
 </script>
@@ -142,7 +151,7 @@ const { copy: copySapcode, copied: copiedSapcode } = useClipboard({ source: sapc
                     :class="productIdx % 2 === 0 ? 'bg-white' : 'bg-gray-100'"
                   >
                     <td class="whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600">
-                      {{ product.vendor_code }}
+                      {{ product.base_vendor_code }}
                     </td>
                     <td class="whitespace-nowrap px-4 py-2 text-sm font-medium text-gray-600">
                       {{ product.amount / product.amount_in_pack }}
