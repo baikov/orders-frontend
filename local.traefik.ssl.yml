@@ -2,9 +2,6 @@ version: '3.9'
 
 services:
   nuxt:
-    environment:
-      - HMR_PROTOCOL=wss
-      - PROTOCOL=https
     labels:
       # Nuxt
       - "traefik.http.routers.nuxt.entrypoints=websecure"

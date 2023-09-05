@@ -13,8 +13,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // apiSecret: '123',
     public: {
-      siteUrl: `${process.env.PROTOCOL}://${process.env.DOMAIN}`,
-      apiUrl: `${process.env.PROTOCOL}://${process.env.DOMAIN}/api`,
+      siteUrl: `${process.env.HTTPS === 'true' ? 'https://' : 'http://'}${process.env.DOMAIN}`,
+      apiUrl: `${process.env.HTTPS === 'true' ? 'https://' : 'http://'}${process.env.DOMAIN}${process.env.API_PORT ? `:${process.env.API_PORT}` : ''}/api`,
       siteName: process.env.SITE_NAME || 'Nuxt 3',
       language: 'ru-RU'
       // titleSeparator: '|',
@@ -44,7 +44,7 @@ export default defineNuxtConfig({
   vite: {
     server: {
       hmr: {
-        protocol: process.env.HMR_PROTOCOL || 'ws'
+        protocol: `${process.env.HTTPS === 'true' ? 'wss' : 'ws'}`
       }
     }
   },
@@ -54,9 +54,9 @@ export default defineNuxtConfig({
   },
   image: {
     // dir: 'assets/img',
-    domains: [`${process.env.PROTOCOL}://${process.env.DOMAIN}`],
+    domains: [`${process.env.HTTPS === 'true' ? 'https://' : 'http://'}${process.env.DOMAIN}`],
     alias: {
-      site: `${process.env.PROTOCOL}://${process.env.DOMAIN}`
+      site: `${process.env.HTTPS === 'true' ? 'https://' : 'http://'}${process.env.DOMAIN}`
     }
   },
   googleFonts: {

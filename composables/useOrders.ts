@@ -4,8 +4,7 @@ export const useOrders = () => {
   const config = useRuntimeConfig()
 
   const getOrdersList = async (customerOrder: number, tradePoint?: number) => {
-    try {
-      const { data: orders } = await useFetch<IOrder[]>(
+    const { data, error, refresh } = await useFetch<IOrder[]>(
         `${config.public.apiUrl}/orders/`,
         {
           query: {
@@ -13,24 +12,13 @@ export const useOrders = () => {
             trade_point: tradePoint
           }
         }
-      )
-      return orders.value
-    } catch (e: any) {
-      showError(e)
-      return null
+    )
+    return {
+      data,
+      error,
+      refresh
     }
   }
 
-  const createTPOrders = async (customerOrder: number) => {
-    try {
-      const { data: orders } = await useFetch<IOrder[]>(
-        `${config.public.apiUrl}/customer-orders/${customerOrder}/create-tp-orders/`
-      )
-      return orders.value
-    } catch (e: any) {
-      showError(e)
-      return null
-    }
-  }
-  return { getOrdersList, createTPOrders }
+  return { getOrdersList }
 }

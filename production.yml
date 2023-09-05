@@ -10,7 +10,6 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}_nuxt
     env_file: .env
     environment:
-      - PROTOCOL=https
       - NODE_ENV=production
     restart: unless-stopped
     command: sh -c "node .output/server/index.mjs"

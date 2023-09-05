@@ -7,24 +7,30 @@ interface ICustomer {
   last_order?: ICustomerOrder
 }
 
-interface IProduct {
-  id: number
+interface IProductCreate {
   name: string
   vendor_code: string | null
+  volume: number | null
   amount_in_pack: number | null
+}
+interface IProduct extends IProductCreate {
+  id: number
 }
 
 interface ICustomerProduct {
   id: number
   name: string
   vendor_code: string | null
-  product: IProduct | null
+  customer: number
+  base_product: IProduct | null
   option: string
 
 }
 interface ICustomerProductUpdate {
-  id: number
-  product_id: number | null
+  name: string
+  vendor_code: string | null
+  customer: number
+  base_product_id: number | null
 }
 
 interface ICustomerOrder {
@@ -33,14 +39,18 @@ interface ICustomerOrder {
   customer_name: string
   file: string
   products: ICustomerProduct[] | []
+  is_ready: boolean
   created: string
   modified: string
 }
 
-interface ITradePoint {
-  id: number
+interface ITradePointUpdate {
   name: string
   sapcode: string
+  customer: number
+}
+interface ITradePoint extends ITradePointUpdate {
+  id: number
 }
 
 interface IProductInOrder {
@@ -67,7 +77,9 @@ export type {
   IProduct,
   ICustomerOrder,
   ITradePoint,
+  ITradePointUpdate,
   IOrder,
   ICustomerProduct,
-  ICustomerProductUpdate
+  ICustomerProductUpdate,
+  IProductCreate
 }

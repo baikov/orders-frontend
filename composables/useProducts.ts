@@ -3,74 +3,84 @@ import type { IProduct, ICustomerProduct, ICustomerProductUpdate } from '~/types
 export const useProducts = () => {
   const config = useRuntimeConfig()
 
-  const getProductList = async (q: string = '') => {
-    const { data: products, error } = await useFetch<IProduct[]>(
-      `${config.public.apiUrl}/products/?search=${q}`
+  const getProductList = async () => {
+    const { data, error, refresh, pending } = await useFetch<IProduct[]>(
+      // `${config.public.apiUrl}/products/?search=${q}`,
+      `${config.public.apiUrl}/products/`,
+      {
+        watch: false
+      }
     )
-    if (products.value) {
-      return products.value
+    return {
+      data,
+      error,
+      refresh,
+      pending
     }
-    if (error.value) {
-      return null
-    }
-    return null
   }
 
   const getProduct = async (id: number) => {
-    try {
-      const { data: product } = await useFetch<IProduct>(
-        `${config.public.apiUrl}/products/${id}/`
-      )
-      return product.value
-    } catch (e: any) {
-      showError(e)
-      return null
-    }
+    const { data, error, refresh } = await useFetch<IProduct>(
+      `${config.public.apiUrl}/products/${id}/`
+    )
+    return { data, error, refresh }
   }
 
-  const updateProduct = async (data: IProduct) => {
-    try {
-      const { data: product } = await useFetch<IProduct>(
-        `${config.public.apiUrl}/products/${data.id}/`, {
+  const deleteProduct = async (id: number) => {
+    const { status, error } = await useFetch(
+      `${config.public.apiUrl}/products/${id}/`, {
+        method: 'DELETE'
+      }
+    )
+    return { status, error }
+  }
+
+  const updateProduct = async (id: number, formData: IProduct) => {
+    const { data, error } = await useFetch<IProduct>(
+        `${config.public.apiUrl}/products/${id}/`, {
           method: 'PUT',
-          body: data
+          body: formData,
+          watch: false
         }
-      )
-      return product.value
-    } catch (e: any) {
-      showError(e)
-      return null
-    }
+    )
+    return { data, error }
+  }
+
+  const createProduct = async (formData: IProduct) => {
+    const { data, error } = await useFetch<IProduct>(
+        `${config.public.apiUrl}/products/`, {
+          method: 'POST',
+          body: formData,
+          watch: false
+        }
+    )
+    return { data, error }
   }
   const getCustomerProduct = async (id: number) => {
     const { data, error } = await useFetch<ICustomerProduct>(
       `${config.public.apiUrl}/customer-products/${id}/`
     )
-    if (data.value) {
-      return data.value
-    }
-    if (error.value) {
-      return null
-    }
-    return null
+    return { data, error }
   }
 
-  const updateCustomerProduct = async (data: ICustomerProductUpdate) => {
-    try {
-      const { data: customerProduct } = await useFetch<ICustomerProduct>(
-        `${config.public.apiUrl}/customer-products/${data.id}/`, {
-          method: 'PUT',
-          body: {
-            product_id: data.product_id
-          }
-        }
-      )
-      return customerProduct.value
-    } catch (e: any) {
-      showError(e)
-      return null
-    }
+  const updateCustomerProduct = async (id: number, formData: ICustomerProductUpdate) => {
+    const { data, error } = await useFetch<ICustomerProduct>(
+      `${config.public.apiUrl}/customer-products/${id}/`, {
+        method: 'PUT',
+        body: formData,
+        watch: false
+      }
+    )
+    return { data, error }
   }
 
-  return { getProduct, updateProduct, getCustomerProduct, updateCustomerProduct, getProductList } // createProduct, deleteProduct
+  return {
+    getProduct,
+    updateProduct,
+    getCustomerProduct,
+    updateCustomerProduct,
+    getProductList,
+    createProduct,
+    deleteProduct
+  }
 }

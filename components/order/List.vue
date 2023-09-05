@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 const { getCustomerOrders } = useCustomer()
-defineProps<{
-  customerId: number | null
-}>()
-const orders = await getCustomerOrders()
-if (orders === null || orders.data.value === null) {
+// defineProps<{
+//   customerId: number | null
+// }>()
+const { data: orders, error } = await getCustomerOrders()
+if (orders.value === null || error.value) {
   // look at https://github.com/mitre/saf-site-frontend/issues/89
-  showError({ statusCode: 404, statusMessage: 'Page Not Found' })
+  // showError({ statusCode: 404, statusMessage: 'Page Not Found' })
   throw createError({
-    statusCode: 400,
-    statusMessage: 'Page Not Found'
+    statusCode: error.value?.statusCode || 400,
+    statusMessage: error.value?.statusMessage || 'Some strange error in order/List.vue :)'
   })
 }
 </script>
@@ -19,9 +19,6 @@ if (orders === null || orders.data.value === null) {
   <section class="relative mx-auto flex w-full flex-col">
     <div class="mx-auto w-full max-w-7xl p-4">
       <div class="flex flex-col">
-        <button type="button" class="btn btn-primary" @click="orders.refresh()">
-          Refresh
-        </button>
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
@@ -40,7 +37,7 @@ if (orders === null || orders.data.value === null) {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="(order, orderIdx) in orders.data.value" :key="order.id" :class="orderIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'">
+                  <tr v-for="(order, orderIdx) in orders" :key="order.id" :class="orderIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'">
                     <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-600">
                       <NuxtLink :to="`/orders/${order.id}`" class="hover:text-gray-800 hover:underline">
                         № {{ order.id }} от {{ order.created }}

@@ -1,24 +1,27 @@
 <script lang="ts" setup>
 import { useClipboard } from '@vueuse/core'
+import type { IOrder } from '~/types/orders'
 
-// const props = defineProps<{
-//   tpOrders: IOrder[]
-// }>()
-const { getOrdersList } = useOrders()
+const props = defineProps<{
+  tpOrders: IOrder[]
+  ordersReady: boolean
+}>()
 const route = useRoute()
 const id = +route.params.id
-const tpOrders = await getOrdersList(id)
 
-if (tpOrders === null) {
-  // look at https://github.com/mitre/saf-site-frontend/issues/89
-  showError({ statusCode: 404, statusMessage: 'Message 0' })
-  throw createError({ statusCode: 400, statusMessage: 'Message 1' })
-}
+// const { getOrdersList } = useOrders()
+// const { data: tpOrders } = await getOrdersList(id)
+
+// if (tpOrders.value === null || tpOrders.value.length === 0) {
+//   // look at https://github.com/mitre/saf-site-frontend/issues/89
+//   // showError({ statusCode: 404, statusMessage: 'Message 0' })
+//   throw createError({ statusCode: 400, statusMessage: 'Message 1' })
+// }
 
 // Пагинация заказов по точкам
-const tpIndex = useState('tp_index', () => 0)
+const tpIndex = useState(`tp_index_${id}`, () => 0)
 const next = () => {
-  if (tpIndex.value < tpOrders.length - 1) { tpIndex.value++ }
+  if (tpIndex.value < props.tpOrders.length - 1) { tpIndex.value++ }
 }
 const prev = () => {
   if (tpIndex.value > 0) { tpIndex.value-- }
@@ -27,25 +30,25 @@ const prev = () => {
 // Функционал копирования таблиц и сапкодов точек по кнопке
 const getTable = (index: number) => {
   let text = ''
-  for (let i = 0; i < tpOrders[index].products_list.length; i++) {
-    text += `${tpOrders[index].products_list[i].vendor_code}\t${tpOrders[index].products_list[i].amount / tpOrders[index].products_list[i].amount_in_pack}`
-    if (i < tpOrders[index].products_list.length - 1) { text += '\n' }
+  for (let i = 0; i < props.tpOrders[index].products_list.length; i++) {
+    text += `${props.tpOrders[index].products_list[i].vendor_code}\t${props.tpOrders[index].products_list[i].amount / props.tpOrders[index].products_list[i].amount_in_pack}`
+    if (i < props.tpOrders[index].products_list.length - 1) { text += '\n' }
   }
   return text
 }
 const getSapcode = (index: number) => {
-  return `${tpOrders[index].trade_point_name}`
+  return `${props.tpOrders[index].trade_point_name}`
 }
-const tableContent = useState('table_content', () => getTable(tpIndex.value))
-const sapcode = useState('sapcode', () => getSapcode(tpIndex.value))
-const ordersCopied = useState('orders_copied', () => Array(tpOrders.length).fill(0))
+const tableContent = useState(`table_content_${id}`, () => getTable(tpIndex.value))
+const sapcode = useState(`sapcode_${id}`, () => getSapcode(tpIndex.value))
+const ordersCopied = useState(`orders_copied_${id}`, () => Array(props.tpOrders.length).fill(0))
 const { copy: copyTable, isSupported } = useClipboard({ source: tableContent })
 const { copy: copySapcode, copied: copiedSapcode } = useClipboard({ source: sapcode })
 </script>
 
 <template>
-  <CommonPageTitle :text="`Товары по точкам в заказе № ${tpOrders[0].customer_order}`" />
-  <section class="relative mx-auto flex w-full flex-col">
+  <section v-if="ordersReady" class="relative mx-auto flex w-full flex-col">
+    <CommonPageH2 :text="`Заказы по точкам: ${tpOrders.length} шт`" />
     <div class="mx-auto w-full max-w-7xl p-4">
       <div class="flex flex-row flex-wrap gap-2">
         <button
@@ -201,4 +204,9 @@ const { copy: copySapcode, copied: copiedSapcode } = useClipboard({ source: sapc
       </div>
     </div>
   </section>
+  <UContainer v-else class="flex flex-col items-center justify-center space-y-2">
+    <USkeleton class="h-4 w-full bg-white" />
+    <USkeleton class="h-4 w-full bg-white" />
+    Укажите соответствие товаров клиента с товарами из матрицы
+  </UContainer>
 </template>
