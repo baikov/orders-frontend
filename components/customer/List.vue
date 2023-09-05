@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const { getCustomersList } = useCustomer()
-const customersList = await getCustomersList()
+const { data: customersList } = await getCustomersList()
 const customerId = useState<number | null>('customer_id', () => null)
 </script>
 

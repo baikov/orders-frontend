@@ -15,8 +15,6 @@ services:
     restart: unless-stopped
     env_file: .env
     environment:
-      - HMR_PROTOCOL=ws
-      - PROTOCOL=http
       - NODE_ENV=development
     ports:
       - '${NUXT_DOCKER_PORT:-3000}:3000'
