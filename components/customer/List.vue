@@ -1,7 +1,27 @@
 <script lang="ts" setup>
 const { getCustomersList } = useCustomer()
-const { data: customersList } = await getCustomersList()
+const { data: customersList, error } = await getCustomersList()
+const toast = useToast()
 const customerId = useState<number | null>('customer_id', () => null)
+if (error.value) {
+  if (error.value.statusCode === 500) {
+    toast.add({
+      title: 'Ошибка на сервере',
+      description: 'Что-то пошло не так, попробуйте позже',
+      icon: 'i-heroicons-x-circle-solid',
+      color: 'red'
+    })
+  } else {
+    for (const key of Object.keys(error.value.data)) {
+      toast.add({
+        title: 'Ошибка получения списка клиентов',
+        description: `${key}: ${error.value.data[key]}`,
+        icon: 'i-heroicons-x-circle-solid',
+        color: 'red'
+      })
+    }
+  }
+}
 </script>
 
 <template>

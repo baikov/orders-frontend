@@ -2,37 +2,31 @@
 const route = useRoute()
 const id = +route.params.id
 const { getOrdersList } = useOrders()
-const { data: tpOrders, error: errorTPOrders, refresh: refreshTPOrders } = await getOrdersList(id)
+const { data: tpOrders, refresh: refreshTPOrders } = await getOrdersList(id)
 
 const { getCustomerOrderDetail } = useCustomer()
-const { data: customerOrderDetail, error: errorOrderDetail } = await getCustomerOrderDetail(id)
+const { data: customerOrderDetail } = await getCustomerOrderDetail(id)
 
-if (errorTPOrders.value) {
-  showError({
-    statusCode: errorTPOrders.value.statusCode,
-    statusMessage: errorTPOrders.value.statusMessage
-  })
-  throw createError({
-    statusCode: errorTPOrders.value.statusCode,
-    statusMessage: errorTPOrders.value.statusMessage
-  })
-}
-if (errorOrderDetail.value) {
-  showError({
-    statusCode: errorOrderDetail.value.statusCode,
-    statusMessage: errorOrderDetail.value.statusMessage
-  })
-  throw createError({
-    statusCode: errorOrderDetail.value.statusCode,
-    statusMessage: errorOrderDetail.value.statusMessage
-  })
-}
+// if (errorTPOrders.value) { , error: errorTPOrders
+// }
+// if (errorOrderDetail.value) { , error: errorOrderDetail
+// }
 </script>
 
 <template>
   <div class="flex flex-1 flex-col">
     <CommonPageTitle :text="`${customerOrderDetail?.customer_name}: заказ №${id} от ${customerOrderDetail?.created}`" />
-    <TradepointOrderList :orders-ready="customerOrderDetail?.is_ready" :tp-orders="tpOrders" />
-    <OrderProductList :order-detail="customerOrderDetail" :refresh-orders="refreshTPOrders" />
+    <TradepointOrderList v-if="tpOrders" :tp-orders="tpOrders" :orders-in-pack="customerOrderDetail?.order_in_packs" />
+    <UContainer v-else class="flex flex-col items-center justify-center space-y-2">
+      <USkeleton class="h-4 w-full bg-white" />
+      <USkeleton class="h-4 w-full bg-white" />
+      Отсутствует список сформированных заказов
+    </UContainer>
+    <OrderProductList v-if="customerOrderDetail" :order-detail="customerOrderDetail" :refresh-orders="refreshTPOrders" />
+    <UContainer v-else class="flex flex-col items-center justify-center space-y-2">
+      <USkeleton class="h-4 w-full bg-white" />
+      <USkeleton class="h-4 w-full bg-white" />
+      Отсутствует список товаров в заказе клиента
+    </UContainer>
   </div>
 </template>

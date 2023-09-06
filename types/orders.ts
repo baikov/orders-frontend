@@ -37,9 +37,9 @@ interface ICustomerOrder {
   id: number
   customer: ICustomer
   customer_name: string
+  order_in_packs: boolean
   file: string
   products: ICustomerProduct[] | []
-  is_ready: boolean
   created: string
   modified: string
 }
