@@ -15,7 +15,7 @@ COPY . .
 RUN yarn build
 
 # Run
-FROM node:${NODE_VERSION}-alpine as prod
+FROM node:20.5.1-alpine as prod
 
 ENV NODE_ENV production
 WORKDIR /nuxt
