@@ -1,6 +1,5 @@
-ARG NODE_VERSION=20
 # Build
-FROM node:${NODE_VERSION}-alpine as builder
+FROM node:20.5.1-alpine as builder
 
 WORKDIR /nuxt
 
