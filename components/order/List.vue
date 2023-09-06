@@ -4,19 +4,22 @@ const { getCustomerOrders } = useCustomer()
 //   customerId: number | null
 // }>()
 const { data: orders, error } = await getCustomerOrders()
-if (orders.value === null || error.value) {
+if (error.value) {
   // look at https://github.com/mitre/saf-site-frontend/issues/89
-  // showError({ statusCode: 404, statusMessage: 'Page Not Found' })
-  throw createError({
-    statusCode: error.value?.statusCode || 400,
-    statusMessage: error.value?.statusMessage || 'Some strange error in order/List.vue :)'
-  })
+  // showError({
+  //   statusCode: error.value?.statusCode || 400,
+  //   statusMessage: error.value?.statusMessage || 'Show Some strange error in order/List.vue :)'
+  // })
+  // throw createError({
+  //   statusCode: error.value?.statusCode || 400,
+  //   statusMessage: error.value?.statusMessage || 'Throw Some strange error in order/List.vue :)'
+  // })
 }
 </script>
 
 <template>
   <CustomerShortList />
-  <section class="relative mx-auto flex w-full flex-col">
+  <section v-if="orders" class="relative mx-auto flex w-full flex-col">
     <div class="mx-auto w-full max-w-7xl p-4">
       <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -62,4 +65,8 @@ if (orders.value === null || error.value) {
       </div>
     </div>
   </section>
+  <UContainer v-else class="flex flex-1 flex-col items-center justify-center">
+    <p>Заказы не найдены</p>
+    <p>Возможно, отсутствует соединение с сервером</p>
+  </UContainer>
 </template>

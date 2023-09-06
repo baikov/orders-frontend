@@ -7,6 +7,10 @@ const props = defineProps<{
   idx: number
   refreshOrders:() => void
 }>()
+const route = useRoute()
+const id = +route.params.id
+const emptyCustomerProducts = useState<ICustomerProduct[]>(`"emptyCustomerProducts_${id}"`)
+
 const toast = useToast()
 const { updateCustomerProduct } = useProducts()
 
@@ -39,6 +43,7 @@ const update = async () => {
       color: 'green'
     })
     customerProductState.value = updatedCustomerProduct.value
+    emptyCustomerProducts.value = emptyCustomerProducts.value.filter(obj => obj.id !== updatedCustomerProduct.value?.id)
     props.refreshOrders()
   }
   editable.value = false
@@ -47,7 +52,6 @@ const update = async () => {
 const search = (q: string) => {
   return props.baseProducts.filter(obj => obj.vendor_code?.includes(q))
 }
-// const selected = ref(baseProduct.value)
 </script>
 
 <template>
