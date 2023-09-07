@@ -74,13 +74,23 @@ export const useProducts = () => {
     return { data, error }
   }
 
+  const deleteCustomerProduct = async (id: number) => {
+    const { status, error } = await useFetch(
+      `${config.public.apiUrl}/products/${id}/`, {
+        method: 'DELETE'
+      }
+    )
+    return { status, error }
+  }
+
   return {
-    getProduct,
-    updateProduct,
-    getCustomerProduct,
-    updateCustomerProduct,
     getProductList,
     createProduct,
-    deleteProduct
+    getProduct,
+    updateProduct,
+    deleteProduct,
+    getCustomerProduct,
+    updateCustomerProduct,
+    deleteCustomerProduct
   }
 }

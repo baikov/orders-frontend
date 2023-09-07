@@ -30,12 +30,13 @@ export const useCustomer = () => {
   }
 
   const getCustomerOrderDetail = async (id: number) => {
-    const { data, error } = await useFetch<ICustomerOrder>(
+    const { data, error, refresh } = await useFetch<ICustomerOrder>(
       `${config.public.apiUrl}/customer-orders/${id}/`
     )
     return {
       data,
-      error
+      error,
+      refresh
     }
   }
   const getCustomerDetail = async (id: number) => {
