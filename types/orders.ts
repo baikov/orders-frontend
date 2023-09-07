@@ -35,7 +35,7 @@ interface ICustomerProductUpdate {
 
 interface ICustomerOrder {
   id: number
-  customer: ICustomer
+  customer: number
   customer_name: string
   order_in_packs: boolean
   file: string

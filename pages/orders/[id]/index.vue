@@ -5,7 +5,7 @@ const { getOrdersList } = useOrders()
 const { data: tpOrders, refresh: refreshTPOrders } = await getOrdersList(id)
 
 const { getCustomerOrderDetail } = useCustomer()
-const { data: customerOrderDetail } = await getCustomerOrderDetail(id)
+const { data: customerOrderDetail, refresh: refreshOrderDetail } = await getCustomerOrderDetail(id)
 
 // if (errorTPOrders.value) { , error: errorTPOrders
 // }
@@ -22,7 +22,12 @@ const { data: customerOrderDetail } = await getCustomerOrderDetail(id)
       <USkeleton class="h-4 w-full bg-white" />
       Отсутствует список сформированных заказов
     </UContainer>
-    <OrderProductList v-if="customerOrderDetail" :order-detail="customerOrderDetail" :refresh-orders="refreshTPOrders" />
+    <OrderProductList
+      v-if="customerOrderDetail"
+      :order-detail="customerOrderDetail"
+      :refresh-orders="refreshTPOrders"
+      :refresh-order-detail="refreshOrderDetail"
+    />
     <UContainer v-else class="flex flex-col items-center justify-center space-y-2">
       <USkeleton class="h-4 w-full bg-white" />
       <USkeleton class="h-4 w-full bg-white" />
