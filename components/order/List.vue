@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-const { getCustomerOrders } = useCustomer()
-// defineProps<{
-//   customerId: number | null
-// }>()
-const { data: orders, error } = await getCustomerOrders()
+const { getCustomerOrders, deleteCustomerOrder } = useCustomer()
+const toast = useToast()
+const { data: orders, error, refresh: refreshCustomerOrders } = await getCustomerOrders()
 if (error.value) {
   // look at https://github.com/mitre/saf-site-frontend/issues/89
   // showError({
@@ -15,11 +13,47 @@ if (error.value) {
   //   statusMessage: error.value?.statusMessage || 'Throw Some strange error in order/List.vue :)'
   // })
 }
+
+const columns = [{
+  key: 'number',
+  label: '№, Дата'
+}, {
+  key: 'customer_name',
+  label: 'Клиент'
+}, {
+  key: 'file',
+  label: 'Файл'
+}, {
+  key: 'remove',
+  label: 'Удалить'
+}]
+
+async function submitDeleteCustomerOrder (id: number) {
+  const { status, error } = await deleteCustomerOrder(id)
+  if (error.value) {
+    for (const key of Object.keys(error.value.data)) {
+      toast.add({
+        title: 'Ошибка удаления продукта',
+        description: `${key}: ${error.value.data[key]}`,
+        icon: 'i-heroicons-x-circle-solid',
+        color: 'red'
+      })
+    }
+  } else if (status.value === 'success') {
+    toast.add({
+      title: 'Удаление успешно',
+      description: 'Продукт успешно удален',
+      icon: 'i-heroicons-check-solid',
+      color: 'green'
+    })
+    await refreshCustomerOrders()
+  }
+}
 </script>
 
 <template>
   <CustomerShortList />
-  <section v-if="orders" class="relative mx-auto flex w-full flex-col">
+  <!-- <section v-if="orders" class="relative mx-auto flex w-full flex-col">
     <div class="mx-auto w-full max-w-7xl p-4">
       <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -64,7 +98,48 @@ if (error.value) {
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
+  <UContainer v-if="orders" class="flex w-full flex-col items-center justify-center">
+    <UTable
+      :rows="orders"
+      :columns="columns"
+      class="w-full overflow-x-auto"
+    >
+      <template #number-data="{ row }">
+        <NuxtLink
+          :to="`/orders/${row.id}`"
+          class="hover:text-primary-800 font-semibold text-gray-700 underline dark:text-gray-300 dark:hover:text-gray-50"
+        >
+          № {{ row.id }} от {{ row.created }}
+        </NuxtLink>
+      </template>
+      <template #customer_name-data="{ row }">
+        <NuxtLink
+          :to="`/customers/${row.customer}`"
+          class="hover:text-primary-800 text-gray-700 underline dark:text-gray-300 dark:hover:text-gray-50"
+        >
+          {{ row.customer_name }}
+        </NuxtLink>
+      </template>
+      <template #file-data="{ row }">
+        <NuxtLink :href="row.file" target="_blank">
+          <UButton
+            color="gray"
+            variant="ghost"
+            icon="i-tabler-file-download"
+          />
+        </NuxtLink>
+      </template>
+      <template #remove-data="{ row }">
+        <UButton
+          color="gray"
+          variant="ghost"
+          icon="i-heroicons-trash-20-solid"
+          @click="submitDeleteCustomerOrder(row.id)"
+        />
+      </template>
+    </UTable>
+  </UContainer>
   <UContainer v-else class="flex flex-1 flex-col items-center justify-center">
     <p>Заказы не найдены</p>
     <p>Возможно, отсутствует соединение с сервером</p>
