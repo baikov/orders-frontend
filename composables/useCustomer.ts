@@ -39,12 +39,14 @@ export const useCustomer = () => {
       refresh
     }
   }
+
   const getCustomerDetail = async (id: number) => {
     const { data, error } = await useFetch<ICustomer>(
       `${config.public.apiUrl}/customers/${id}/`
     )
     return { data, error }
   }
+
   const createCustomerOrder = async (formData: FormData) => {
     const { data, error } = await useFetch<ICustomerOrder>(
       `${config.public.apiUrl}/customer-orders/`, {
@@ -55,11 +57,19 @@ export const useCustomer = () => {
     return { data, error }
   }
 
+  const deleteCustomerOrder = async (id: number) => {
+    const { status, error } = await useFetch(
+      `${config.public.apiUrl}/customer-orders/${id}`
+    )
+    return { status, error }
+  }
+
   return {
     getCustomersList,
     getCustomerDetail,
     createCustomerOrder,
     getCustomerOrders,
-    getCustomerOrderDetail
+    getCustomerOrderDetail,
+    deleteCustomerOrder
   }
 }

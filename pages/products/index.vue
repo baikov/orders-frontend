@@ -109,6 +109,17 @@ const updateFields = useState('updateFields', () => {
   }, {}) || {}
 })
 async function submitUpdateProduct (id: number) {
+  if (updateFields.value[id].vendor_code === '') {
+    toast.add({
+      title: 'Ошибка обновления продукта',
+      description: 'Артикул не может быть пустым',
+      icon: 'i-heroicons-x-circle-solid',
+      color: 'red'
+    })
+    const product = products.value?.filter(product => product.id === id)
+    updateFields.value[id].vendor_code = product![0].vendor_code
+    return
+  }
   const { data: product, error } = await updateProduct(id, updateFields.value[id])
   if (error.value) {
     for (const key of Object.keys(error.value.data)) {
@@ -128,7 +139,9 @@ async function submitUpdateProduct (id: number) {
     })
   }
   await refresh()
-  update.value[id] = false
+  for (const key of Object.keys(update.value[id])) {
+    update.value[id][key] = false
+  }
 }
 
 async function submitDeleteProduct (id: number) {
@@ -195,7 +208,12 @@ async function submitDeleteProduct (id: number) {
           Добавить товар
         </UButton>
       </UForm>
-      <UInput v-model="q" placeholder="Поиск продукта" />
+      <UInput
+        v-model="q"
+        icon="i-heroicons-magnifying-glass-20-solid"
+        placeholder="Поиск продукта"
+        :ui="{ wrapper: 'relative w-full disabled:cursor-not-allowed disabled:opacity-75 focus:outline-none border-0 mb-8' }"
+      />
       <UTable
         :loading="pending"
         :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: 'Обновение товаров...' }"
@@ -205,92 +223,101 @@ async function submitDeleteProduct (id: number) {
       >
         <template #vendor_code-data="{ row }">
           <div v-if="!update[row.id].vendor_code" class="group flex">
-            <span class="group-hover:opacity-50">{{ row.vendor_code }}</span>
-            <UIcon
-              name="i-tabler-edit"
-              class="hidden h-5 w-5 text-gray-600 hover:text-gray-800 group-hover:block"
-              aria-hidden="true"
+            <UButton
+              color="gray"
+              size="sm"
+              icon="i-tabler-edit"
+              variant="link"
+              :label="row.vendor_code"
               @click="update[row.id].vendor_code = true"
             />
           </div>
           <div v-else class="flex">
             <UInput v-model="updateFields[row.id].vendor_code" placeholder="Артикул" required />
-            <UButton
-              icon="i-tabler-x"
-              size="sm"
-              color="primary"
-              square
-              variant="solid"
-              @click="update[row.id].vendor_code = false"
-            />
-            <UButton
-              icon="i-mdi-content-save"
-              size="sm"
-              color="green"
-              square
-              variant="solid"
-              @click="submitUpdateProduct(row.id)"
-            />
+            <UButtonGroup size="sm">
+              <UButton
+                icon="i-tabler-x"
+                size="sm"
+                color="primary"
+                square
+                variant="outline"
+                @click="update[row.id].vendor_code = false"
+              />
+              <UButton
+                icon="i-mdi-content-save"
+                size="sm"
+                color="green"
+                square
+                variant="outline"
+                @click="submitUpdateProduct(row.id)"
+              />
+            </UButtonGroup>
           </div>
         </template>
         <template #volume-data="{ row }">
           <div v-if="!update[row.id].volume" class="group flex">
-            <span class="group-hover:opacity-50">{{ row.volume }}</span>
-            <UIcon
-              name="i-tabler-edit"
-              class="hidden h-5 w-5 text-gray-600 hover:text-gray-800 group-hover:block"
-              aria-hidden="true"
+            <UButton
+              color="gray"
+              size="sm"
+              icon="i-tabler-edit"
+              variant="link"
+              :label="row.volume.toString()"
               @click="update[row.id].volume = true"
             />
           </div>
           <div v-else class="flex">
             <UInput v-model="updateFields[row.id].volume" placeholder="Объём" />
-            <UButton
-              icon="i-tabler-x"
-              size="sm"
-              color="primary"
-              square
-              variant="solid"
-              @click="update[row.id].volume = false"
-            />
-            <UButton
-              icon="i-mdi-content-save"
-              size="sm"
-              color="green"
-              square
-              variant="solid"
-              @click="submitUpdateProduct(row.id)"
-            />
+            <UButtonGroup size="sm">
+              <UButton
+                icon="i-tabler-x"
+                size="sm"
+                color="primary"
+                square
+                variant="outline"
+                @click="update[row.id].volume = false"
+              />
+              <UButton
+                icon="i-mdi-content-save"
+                size="sm"
+                color="green"
+                square
+                variant="outline"
+                @click="submitUpdateProduct(row.id)"
+              />
+            </UButtonGroup>
           </div>
         </template>
         <template #amount_in_pack-data="{ row }">
           <div v-if="!update[row.id].amount_in_pack" class="group flex">
-            <span class="group-hover:opacity-50">{{ row.amount_in_pack }}</span>
-            <UIcon
-              name="i-tabler-edit"
-              class="hidden h-5 w-5 text-gray-600 hover:text-gray-800 group-hover:block"
-              aria-hidden="true"
+            <UButton
+              color="gray"
+              size="sm"
+              icon="i-tabler-edit"
+              variant="link"
+              :label="row.amount_in_pack.toString()"
               @click="update[row.id].amount_in_pack = true"
             />
           </div>
           <div v-else class="flex">
             <UInput v-model="updateFields[row.id].amount_in_pack" placeholder="Кол-во" />
-            <UButton
-              icon="i-tabler-x"
-              size="sm"
-              color="primary"
-              square
-              variant="solid"
-              @click="update[row.id].amount_in_pack = false"
-            />
-            <UButton
-              icon="i-mdi-content-save"
-              size="sm"
-              color="green"
-              square
-              variant="solid"
-              @click="submitUpdateProduct(row.id)"
-            />
+            <UButtonGroup size="sm">
+              <UButton
+                icon="i-tabler-x"
+                size="sm"
+                color="primary"
+                square
+                variant="outline"
+                @click="update[row.id].amount_in_pack = false"
+              />
+              <UButton
+                icon="i-mdi-content-save"
+                size="sm"
+                color="green"
+                square
+                variant="outline"
+                @click="submitUpdateProduct(row.id)"
+              />
+            </UButtonGroup>
           </div>
         </template>
         <template #actions-data="{ row }">
