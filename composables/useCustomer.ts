@@ -59,7 +59,9 @@ export const useCustomer = () => {
 
   const deleteCustomerOrder = async (id: number) => {
     const { status, error } = await useFetch(
-      `${config.public.apiUrl}/customer-orders/${id}`
+      `${config.public.apiUrl}/customer-orders/${id}`, {
+        method: 'DELETE'
+      }
     )
     return { status, error }
   }

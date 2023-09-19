@@ -33,7 +33,7 @@ async function submitDeleteCustomerOrder (id: number) {
   if (error.value) {
     for (const key of Object.keys(error.value.data)) {
       toast.add({
-        title: 'Ошибка удаления продукта',
+        title: 'Ошибка удаления заказа',
         description: `${key}: ${error.value.data[key]}`,
         icon: 'i-heroicons-x-circle-solid',
         color: 'red'
@@ -42,7 +42,7 @@ async function submitDeleteCustomerOrder (id: number) {
   } else if (status.value === 'success') {
     toast.add({
       title: 'Удаление успешно',
-      description: 'Продукт успешно удален',
+      description: 'Заказ успешно удален',
       icon: 'i-heroicons-check-solid',
       color: 'green'
     })

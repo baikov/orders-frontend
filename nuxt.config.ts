@@ -28,7 +28,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxtjs/eslint-module', // https://github.com/nuxt-modules/eslint
-    '@nuxthq/ui',
+    '@nuxt/ui',
     '@nuxt/image',
     '@vueuse/nuxt',
     '@nuxtjs/google-fonts',
