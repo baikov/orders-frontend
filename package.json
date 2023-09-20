@@ -28,7 +28,7 @@
     "nuxt": "^3.7.1",
     "nuxt-og-image": "^2.0.28",
     "nuxt-schema-org": "^2.2.0",
-    "nuxt-simple-robots": "^3.1.1",
+    "nuxt-simple-robots": "^3.1.5",
     "nuxt-simple-sitemap": "^3.2.7",
     "pinia": "^2.1.6",
     "typescript": "^5.2.2",
