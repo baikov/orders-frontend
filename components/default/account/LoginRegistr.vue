@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { FormError } from '@nuxthq/ui/dist/runtime/types'
+import type { FormError } from '@nuxt/ui/dist/runtime/types'
 import { storeToRefs } from 'pinia'
 import { promiseTimeout } from '@vueuse/core'
 import type { ILoginForm, IRegistrationForm, IUser, IAuthError } from '~/types'

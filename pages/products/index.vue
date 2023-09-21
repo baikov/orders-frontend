@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { FormError } from '@nuxthq/ui/dist/runtime/types'
+import type { FormError } from '@nuxt/ui/dist/runtime/types'
 import type { IProduct, IProductCreate } from '~/types/orders'
 const { getProductList, createProduct, updateProduct, deleteProduct } = useProducts()
 const { data: products, refresh, pending } = await getProductList()
