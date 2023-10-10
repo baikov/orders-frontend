@@ -688,10 +688,10 @@
   dependencies:
     "@iconify/types" "*"
 
-"@iconify/json@^2.2.117":
-  version "2.2.118"
-  resolved "https://registry.yarnpkg.com/@iconify/json/-/json-2.2.118.tgz#8cb9d3005ece55c92bc445915dbb425f87d2cba4"
-  integrity sha512-nQvWSyimrU3fXtK0aDc6LkTc85H29jid1x3synkrscTpS8R0CkNe0qPh5ko2+SGrQKcyiaw7yKnEHp9Ar6HrgA==
+"@iconify/json@^2.2.126":
+  version "2.2.126"
+  resolved "https://registry.yarnpkg.com/@iconify/json/-/json-2.2.126.tgz#afdf34c02b70b7d1a226f290645b0ad62c1dbadc"
+  integrity sha512-OoOu5RP3vUiYwwmY/q2KsJQKzI5XKnLeIONwbkvu5EY6+qHQVuqZ4Dry1zdGJub/V0qa6j+OU3bkdL7TgD80dw==
   dependencies:
     "@iconify/types" "*"
     pathe "^1.1.0"
