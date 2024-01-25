@@ -20,7 +20,7 @@
     "@nuxtjs/eslint-module": "^4.1.0",
     "@nuxtjs/google-fonts": "3.1.0",
     "@pinia/nuxt": "0.5.1",
-    "@types/node": "20.10.1",
+    "@types/node": "20.11.6",
     "@vueuse/core": "10.6.1",
     "@vueuse/nuxt": "10.6.1",
     "eslint": "8.54.0",
