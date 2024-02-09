@@ -1816,10 +1816,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@20.10.1":
-  version "20.10.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.10.1.tgz#d2c96f356c3125fedc983d74c424910c3767141c"
-  integrity sha512-T2qwhjWwGH81vUEx4EXmBKsTJRXFXNZTL4v0gi01+zyBmCwzE6TyHszqX01m+QHTEq+EZNo13NeJIdEqf+Myrg==
+"@types/node@*", "@types/node@20.11.17":
+  version "20.11.17"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.17.tgz#cdd642d0e62ef3a861f88ddbc2b61e32578a9292"
+  integrity sha512-QmgQZGWu1Yw9TDyAP9ZzpFJKynYNeOvwMJmaxABfieQoVoiVOS6MN1WSpqpRcbeA5+RW82kraAVxCCJg+780Qw==
   dependencies:
     undici-types "~5.26.4"
 
