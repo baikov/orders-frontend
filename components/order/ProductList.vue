@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { ICustomerOrder, ICustomerProduct } from '~/types/orders'
+import type { ICustomerOrder, ICustomerProduct, IOrder } from '~/types/orders'
 const props = defineProps<{
   orderDetail: ICustomerOrder
-  refreshOrders:() => Promise<void>
-  refreshOrderDetail:() => Promise<void>
+  refreshOrders:() => Promise<IOrder[] | null>
+  refreshOrderDetail:() => Promise<ICustomerOrder | null>
 }>()
 
 const toast = useToast()
@@ -72,7 +72,7 @@ async function submitUpdateCustomerProduct (id: number) {
   const data = {
     name: updateFields.value[id].name,
     vendor_code: updateFields.value[id].vendor_code,
-    base_product_id: updateFields.value[id].base_product?.id || null,
+    base_product_id: updateFields.value[id].base_product || null,
     customer: props.orderDetail.customer
   }
   const { data: product, error } = await updateCustomerProduct(id, data)
@@ -97,9 +97,9 @@ async function submitUpdateCustomerProduct (id: number) {
   }
   update.value[id] = false
 }
-const search = (q: string) => {
-  return baseProducts.value?.filter(obj => obj.vendor_code?.includes(q))
-}
+// const search = (q: string) => {
+//   return baseProducts.value?.filter(obj => obj.vendor_code?.includes(q))
+// }
 </script>
 
 <template>
@@ -118,6 +118,7 @@ const search = (q: string) => {
       <UToggle v-model="onlyWithEmptyBaseProduct" on-icon="i-heroicons-check-20-solid" off-icon="i-heroicons-x-mark-20-solid" />
     </div>
     <UTable
+      v-if="baseProducts"
       :rows="filteredRows"
       :columns="columns"
       class="overflow-x-auto"
@@ -137,10 +138,11 @@ const search = (q: string) => {
           <USelectMenu
             v-model="updateFields[row.id].base_product"
             :options="baseProducts"
-            :searchable="search"
-            by="vendor_code"
             placeholder="Выберите базовый продукт"
+            searchable
+            :search-attributes="['name', 'vendor_code']"
             searchable-placeholder="Введите артикул..."
+            value-attribute="id"
             option-attribute="option"
           />
           <UButtonGroup size="sm">
@@ -173,5 +175,8 @@ const search = (q: string) => {
         <span class="group-hover:opacity-50">{{ row.base_product?.amount_in_pack || '-' }}</span>
       </template>
     </UTable>
+    <p v-else class="text-center text-sm text-gray-500">
+      Не удалось загрузить список...
+    </p>
   </UContainer>
 </template>

@@ -1,7 +1,27 @@
 <script lang="ts" setup>
+// import { useAuthStore } from '~/store/auth'
 const { getCustomerOrders, deleteCustomerOrder } = useCustomer()
 const toast = useToast()
+// const refreshCookie = useCookie<string>('refresh')
+// const { refreshJWT } = useAuthStore()
+
 const { data: orders, error, refresh: refreshCustomerOrders } = await getCustomerOrders()
+// if (error.value?.statusCode === 401 && refreshCookie.value) {
+//   await refreshJWT(refreshCookie.value).then(async () => {
+//     await refreshCustomerOrders()
+//   })
+// }
+// if (error.value?.statusCode === 401 && refreshCookie.value) {
+if (error.value?.statusCode === 401) {
+  // await refreshJWT(refreshCookie.value)
+  toast.add({
+    title: 'Ошибка авторизации',
+    description: 'Обновите страницу',
+    icon: 'i-heroicons-x-circle-solid',
+    color: 'red'
+  })
+  // await navigateTo(`/orders/${customerOrder.value?.id}`)
+}
 if (error.value) {
   // look at https://github.com/mitre/saf-site-frontend/issues/89
   // showError({

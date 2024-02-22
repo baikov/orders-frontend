@@ -5,11 +5,11 @@ const breadcrumbs = defineProps<{
 }>()
 const schemaBreadcrumbs = breadcrumbs.items?.map(({ name, href }) => ({ name, item: href }))
 schemaBreadcrumbs?.unshift({ name: 'Главная', item: '/' })
-useSchemaOrg([
-  defineBreadcrumb({
-    itemListElement: schemaBreadcrumbs
-  })
-])
+// useSchemaOrg([
+//   defineBreadcrumb({
+//     itemListElement: schemaBreadcrumbs
+//   })
+// ])
 </script>
 
 <template>

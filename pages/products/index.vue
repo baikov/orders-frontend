@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { FormError } from '@nuxt/ui/dist/runtime/types'
+import type { FormError } from '#ui/types'
 import type { IProduct, IProductCreate } from '~/types/orders'
 const { getProductList, createProduct, updateProduct, deleteProduct } = useProducts()
 const { data: products, refresh, pending } = await getProductList()
@@ -9,17 +9,17 @@ const columns = [{
   key: 'id',
   label: 'ID',
   sortable: true,
-  direction: 'asc'
+  direction: 'asc' as 'asc' | 'desc' | undefined
 }, {
   key: 'name',
   label: 'Product name',
   sortable: true,
-  direction: 'desc'
+  direction: 'desc' as 'asc' | 'desc' | undefined
 }, {
   key: 'vendor_code',
   label: 'Артикул',
   sortable: true,
-  direction: 'desc'
+  direction: 'desc' as 'asc' | 'desc' | undefined
 }, {
   key: 'volume',
   label: 'Объём/Вес'
@@ -27,7 +27,8 @@ const columns = [{
   key: 'amount_in_pack',
   label: 'Кол-во'
 }, {
-  key: 'actions'
+  key: 'actions',
+  label: 'actions'
 }]
 
 const validateProduct = (state: IProductCreate): FormError[] => {
@@ -40,9 +41,9 @@ const form = ref()
 
 const productForm = ref<IProductCreate>({
   name: '',
-  vendor_code: null,
-  amount_in_pack: null,
-  volume: null
+  vendor_code: undefined,
+  amount_in_pack: undefined,
+  volume: undefined
 })
 async function onSubmitProduct () {
   const data = await form.value!.validate(productForm.value)
@@ -64,7 +65,7 @@ async function onSubmitProduct () {
       color: 'green'
     })
   }
-  productForm.value.vendor_code = null
+  productForm.value.vendor_code = undefined
   productForm.value.name = ''
   await refresh()
 }
@@ -219,7 +220,7 @@ async function submitDeleteProduct (id: number) {
         :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: 'Обновение товаров...' }"
         :rows="rows"
         :columns="columns"
-        :sort="{ column: 'id' }"
+        :sort="{ column: 'id', direction: 'desc' }"
       >
         <template #vendor_code-data="{ row }">
           <div v-if="!update[row.id].vendor_code" class="group flex">

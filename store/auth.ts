@@ -94,9 +94,8 @@ export const useAuthStore = defineStore('auth', {
         this.getUserMe(token)
       }
       if (error.value) {
-        // return false
         this.errorMessage = createErrors(error.value.data)
-        if (this.errorMessage?.code === 401 && refreshCookie.value) {
+        if (error.value.statusCode === 401 && refreshCookie.value) {
           this.refreshJWT(refreshCookie.value)
         } else {
           this.authenticated = false
@@ -104,6 +103,7 @@ export const useAuthStore = defineStore('auth', {
           refreshCookie.value = null
           tokenCookie.value = null
           userCookie.value = null
+          navigateTo('/account')
         }
       }
     },

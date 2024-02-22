@@ -80,7 +80,7 @@ const customerId = useState<number | null>('customer_id', () => null)
               >
                 <UIcon
                   name="i-tabler-filter"
-                  class="h-5 w-5 text-gray-600 hover:text-gray-800"
+                  class="size-5 text-gray-600 hover:text-gray-800"
                   aria-hidden="true"
                 />
               </NuxtLink>
@@ -93,7 +93,7 @@ const customerId = useState<number | null>('customer_id', () => null)
               >
                 <UIcon
                   name="i-tabler-file-plus"
-                  class="h-5 w-5 text-green-600 hover:text-green-700"
+                  class="size-5 text-green-600 hover:text-green-700"
                   aria-hidden="true"
                 />
               </NuxtLink>

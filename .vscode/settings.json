@@ -20,8 +20,8 @@
   // ESLint
   "prettier.enable": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll": false
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll": "never"
   },
   // Nuxt
   "nuxtr.defaultPackageManager": "Yarn",

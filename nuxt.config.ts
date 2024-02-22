@@ -32,11 +32,11 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@vueuse/nuxt',
     '@nuxtjs/google-fonts',
-    'nuxt-simple-sitemap', // https://github.com/harlan-zw/nuxt-simple-sitemap
-    'nuxt-simple-robots', // https://github.com/harlan-zw/nuxt-simple-robots
-    'nuxt-og-image', // https://github.com/harlan-zw/nuxt-og-image
-    'nuxt-schema-org', // https://unhead-schema-org.harlanzw.com/integrations/nuxt/module
     '@pinia/nuxt'
+    // 'nuxt-simple-sitemap', // https://github.com/harlan-zw/nuxt-simple-sitemap
+    // 'nuxt-simple-robots', // https://github.com/harlan-zw/nuxt-simple-robots
+    // 'nuxt-og-image', // https://github.com/harlan-zw/nuxt-og-image
+    // 'nuxt-schema-org', // https://unhead-schema-org.harlanzw.com/integrations/nuxt/module
     // '@artmizu/yandex-metrika-nuxt',
     // 'nuxt-vitest',
     // https://sentry.nuxtjs.org/getting-started/setup
@@ -68,11 +68,11 @@ export default defineNuxtConfig({
   vueuse: {
     ssrHandlers: true
   },
-  robots: {
-    // provide simple disallow rules for all robots `user-agent: *`
-    disallow: ['/account', '/admin'],
-    allow: '/admin/login'
-  },
+  // robots: {
+  //   // provide simple disallow rules for all robots `user-agent: *`
+  //   disallow: ['/account', '/admin'],
+  //   allow: '/admin/login'
+  // },
   eslint: {
     lintOnStart: false
   },

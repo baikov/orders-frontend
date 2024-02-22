@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { FormError } from '@nuxt/ui/dist/runtime/types'
+import type { FormError } from '#ui/types'
 import { storeToRefs } from 'pinia'
 import { promiseTimeout } from '@vueuse/core'
 import type { ILoginForm, IRegistrationForm, IUser, IAuthError } from '~/types'
@@ -50,7 +50,7 @@ const registrationForm = ref<IRegistrationForm>(
     re_password: undefined
   }
 )
-
+// TODO: UI 2.13 change Form
 async function onSubmitLogin () {
   const data = await form.value!.validate(loginForm.value)
   await loginUser(data)
@@ -126,7 +126,7 @@ async function onSubmitRegistration () {
         ref="form"
         :validate="validateLogin"
         :state="loginForm"
-        @submit.prevent="onSubmitLogin"
+        @submit="onSubmitLogin"
       >
         <UCard>
           <template #header>
@@ -160,9 +160,9 @@ async function onSubmitRegistration () {
         ref="form"
         :validate="validateRegistration"
         :state="registrationForm"
-        @submit.prevent="onSubmitRegistration"
+        @submit="onSubmitRegistration"
       >
-        <UCard @submit.prevent="onSubmitRegistration">
+        <UCard>
           <template #header>
             <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
               {{ item.label }}

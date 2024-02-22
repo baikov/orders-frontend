@@ -55,6 +55,9 @@ async function submitUpdateTP (id: number) {
   await refreshTPList()
   updateTPstate.value[id].sapcode = false
 }
+function truncatedName (name: string) {
+  return name.length > 20 ? name.slice(0, 20) + '...' : name
+}
 </script>
 
 <template>
@@ -63,7 +66,7 @@ async function submitUpdateTP (id: number) {
       <li v-for="tp in tradePointsList" :key="tp.id" class="col-span-1 flex rounded-md shadow-sm">
         <div class="flex flex-1 items-center justify-between truncate rounded-md border border-gray-200 bg-white px-4 py-2 dark:border-gray-600 dark:bg-gray-800">
           <p class="font-medium">
-            {{ tp.name }}
+            {{ truncatedName(tp.name) }}
           </p>
           <p v-if="!updateTPstate[tp.id].sapcode" class="text-gray-500">
             {{ tp.sapcode || 'sapcode not set' }}
@@ -72,14 +75,14 @@ async function submitUpdateTP (id: number) {
           <UIcon
             v-if="!updateTPstate[tp.id].sapcode"
             name="i-tabler-edit"
-            class="h-5 w-5 text-gray-400 outline-none hover:text-gray-800 dark:hover:text-gray-200"
+            class="size-5 text-gray-400 outline-none hover:text-gray-800 dark:hover:text-gray-200"
             aria-hidden="true"
             @click="updateTPstate[tp.id].sapcode = true"
           />
           <UIcon
             v-else
             name="i-mdi-content-save"
-            class="h-5 w-5 text-gray-400 outline-none hover:text-gray-800 dark:hover:text-gray-200"
+            class="size-5 text-gray-400 outline-none hover:text-gray-800 dark:hover:text-gray-200"
             aria-hidden="true"
             @click="submitUpdateTP(tp.id)"
           />

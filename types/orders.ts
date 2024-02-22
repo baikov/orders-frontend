@@ -9,9 +9,9 @@ interface ICustomer {
 
 interface IProductCreate {
   name: string
-  vendor_code: string | null
-  volume: number | null
-  amount_in_pack: number | null
+  vendor_code: string | undefined
+  volume: number | undefined
+  amount_in_pack: number | undefined
 }
 interface IProduct extends IProductCreate {
   id: number

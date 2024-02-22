@@ -47,6 +47,9 @@ const sapcode = useState(`sapcode_${id}`, () => getSapcode(tpIndex.value))
 const ordersCopied = useState(`orders_copied_${id}`, () => Array(props.tpOrders.length).fill(0))
 const { copy: copyTable, isSupported } = useClipboard({ source: tableContent })
 const { copy: copySapcode, copied: copiedSapcode } = useClipboard({ source: sapcode })
+function truncatedName (name: string) {
+  return name.length > 20 ? name.slice(0, 20) + '...' : name
+}
 </script>
 
 <template>
@@ -61,7 +64,7 @@ const { copy: copySapcode, copied: copiedSapcode } = useClipboard({ source: sapc
           :color="tpIndex === index ? 'primary' : 'gray'"
           variant="outline"
           :class="ordersCopied[index] ? 'line-through' : ''"
-          :label="tp.trade_point_name"
+          :label="truncatedName(tp.trade_point_name)"
           @click="tpIndex = index; tableContent = getTable(tpIndex)"
         />
       </div>
@@ -84,7 +87,7 @@ const { copy: copySapcode, copied: copiedSapcode } = useClipboard({ source: sapc
             </UButtonGroup>
           </div>
           <div class="text-md flex items-center justify-center p-4 text-center font-semibold">
-            {{ tpOrders[tpIndex].trade_point_name }}
+            {{ truncatedName(tpOrders[tpIndex].trade_point_name) }}
           </div>
           <div class="text-md flex items-center justify-center p-4 text-center font-semibold">
             <span
@@ -97,13 +100,13 @@ const { copy: copySapcode, copied: copiedSapcode } = useClipboard({ source: sapc
               <UIcon
                 v-if="!copiedSapcode"
                 name="i-mdi-content-copy"
-                class="ml-2 h-4 w-4"
+                class="ml-2 size-4"
                 aria-hidden="true"
               />
               <UIcon
                 v-else
                 name="i-mdi-check-circle-outline"
-                class="ml-2 h-4 w-4"
+                class="ml-2 size-4"
                 aria-hidden="true"
               />
             </span>

@@ -52,8 +52,8 @@ const getItems = (authenticated: boolean) => {
 <template>
   <UDropdown :items="getItems(authenticated)" :ui="{ item: { disabled: 'cursor-text select-text' } }" :popper="{ placement: 'bottom-start' }">
     <!-- <UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" /> -->
-    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-50">
-      <UIcon name="i-heroicons-user" class="h-6 w-6 bg-gray-900 text-gray-900" />
+    <div class="flex size-8 items-center justify-center rounded-full bg-gray-50">
+      <UIcon name="i-heroicons-user" class="size-6 bg-gray-900 text-gray-900" />
     </div>
 
     <template #account="{ item }">
@@ -69,7 +69,7 @@ const getItems = (authenticated: boolean) => {
 
     <template #item="{ item }">
       <span class="truncate">{{ item.label }}</span>
-      <UIcon :name="item.icon" class="ms-auto h-4 w-4 shrink-0 text-gray-400 dark:text-gray-500" />
+      <UIcon :name="item.icon" class="ms-auto size-4 shrink-0 text-gray-400 dark:text-gray-500" />
     </template>
   </UDropdown>
 </template>
