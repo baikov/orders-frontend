@@ -12,7 +12,9 @@
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "@iconify/json": "2.2.150",
+    "@iconify-json/icon-park-solid": "1.1.14",
+    "@iconify-json/mdi": "1.1.64",
+    "@iconify-json/tabler": "1.1.105",
     "@nuxt/devtools": "1.0.6",
     "@nuxt/image": "1.2.0",
     "@nuxt/ui": "2.14.0",
