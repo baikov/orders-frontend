@@ -12,12 +12,10 @@
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "@iconify-json/icon-park-solid": "1.1.14",
-    "@iconify-json/mdi": "1.1.64",
-    "@iconify-json/tabler": "1.1.105",
+    "@iconify/json": "2.2.171",
     "@nuxt/devtools": "1.0.6",
     "@nuxt/image": "1.2.0",
-    "@nuxt/ui": "2.14.0",
+    "@nuxt/ui": "2.12.3",
     "@nuxtjs/eslint-config-typescript": "12.1.0",
     "@nuxtjs/eslint-module": "4.1.0",
     "@nuxtjs/google-fonts": "3.1.3",
