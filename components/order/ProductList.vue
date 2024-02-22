@@ -2,8 +2,8 @@
 import type { ICustomerOrder, ICustomerProduct, IOrder } from '~/types/orders'
 const props = defineProps<{
   orderDetail: ICustomerOrder
-  refreshOrders:() => Promise<IOrder[] | Promise<void> | null>
-  refreshOrderDetail:() => Promise<ICustomerOrder | Promise<void> | null>
+  refreshOrders:() => Promise<IOrder[] | null> | Promise<void>
+  refreshOrderDetail:() => Promise<ICustomerOrder | null> | Promise<void>
 }>()
 
 const toast = useToast()
