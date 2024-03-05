@@ -12,7 +12,7 @@
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "@iconify/json": "2.2.171",
+    "@iconify/json": "2.2.189",
     "@nuxt/devtools": "1.0.6",
     "@nuxt/image": "1.2.0",
     "@nuxt/ui": "2.12.3",
