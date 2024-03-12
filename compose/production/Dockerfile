@@ -1,5 +1,5 @@
 # Build
-FROM node:21.6.0-alpine as builder
+FROM node:21.7.1-alpine as builder
 
 WORKDIR /nuxt
 
@@ -15,7 +15,7 @@ COPY . .
 RUN yarn build
 
 # Run
-FROM node:21.6.0-alpine as prod
+FROM node:21.7.1-alpine as prod
 
 ENV NODE_ENV production
 WORKDIR /nuxt
