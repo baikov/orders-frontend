@@ -1,4 +1,4 @@
-FROM node:21.6.0-alpine as base
+FROM node:22.1.0-alpine as base
 
 ENV NODE_ENV=development
 
