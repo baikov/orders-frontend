@@ -189,7 +189,7 @@ async function submitDeleteProduct (id: number) {
         :validate="validateProduct"
         :state="productForm"
         class="mb-12 flex gap-4 rounded-lg bg-white p-4 shadow"
-        @submit.prevent="onSubmitProduct"
+        @submit="onSubmitProduct"
       >
         <UFormGroup required name="name">
           <UInput v-model="productForm.name" placeholder="Название" required />
